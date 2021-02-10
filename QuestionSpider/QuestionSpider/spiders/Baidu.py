@@ -4,14 +4,15 @@ import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from QuestionSpider.items import QuestionspiderItem
-from QuestionSpider.tools.crawls_tools import type_re,re_format_time
+from QuestionSpider.tools.crawls_tools import type_re, re_format_time, get_md5
 
 import re
+
 
 class BaiduSpider(CrawlSpider):
     name = 'Baidu'
     # allowed_domains = ['www.xxx.com']
-    start_urls = ['https://www.baidu.com/s?wd=python']
+    start_urls = ['https://www.baidu.com/s?wd=java']
 
     question_rule = LinkExtractor(allow=r's\?wd=.*?')  # 问题的url
     page_rule = LinkExtractor(allow=r'pn=\d+')  # 页数
@@ -33,11 +34,13 @@ class BaiduSpider(CrawlSpider):
                 question_type = type_re(re.findall("www.(.*?).com", href))
             else:
                 question_type = "None"
-            item["title"] = "".join(title_list).strip().replace("\n","")
+            item["title"] = "".join(title_list).strip().replace("\n", "")
+            item["title_md5"] = get_md5(item["title"])
             item["href"] = href
-            item["describe"] = "".join(describe_list).strip().replace("\n","")
+            item["describe"] = "".join(describe_list).strip().replace("\n", "")
             item["source"] = source
             item["question_type"] = question_type
             item["crawl_time"] = re_format_time(datetime.datetime.now())
-            yield item
+            if item["title"]:
+                yield item
         # return item

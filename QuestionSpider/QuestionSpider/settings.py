@@ -17,9 +17,11 @@ NEWSPIDER_MODULE = 'QuestionSpider.spiders'
 #USER_AGENT = 'QuestionSpider (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36"
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3396.99 Safari/537.36"
 ROBOTSTXT_OBEY = False
-LOG_LEVEL = "ERROR"
+RANDOMIZE_DOWNLOAD_DELAY = True
+DOWNLOAD_DELAY = 1
+# LOG_LEVEL = "ERROR"
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -52,9 +54,9 @@ LOG_LEVEL = "ERROR"
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'QuestionSpider.middlewares.QuestionspiderDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+   'QuestionSpider.middlewares.QuestionspiderDownloaderMiddleware': 543,
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -65,7 +67,7 @@ LOG_LEVEL = "ERROR"
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'QuestionSpider.pipelines.QuestionspiderPipeline': 300,
+   'QuestionSpider.pipelines.MysqlTwistedPipeline': 4,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -90,9 +92,9 @@ ITEM_PIPELINES = {
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 MYSQL_HOST = "127.0.0.1"
-MYSQL_DBNAME = "spider"
+MYSQL_DBNAME = "crawlq"
 MYSQL_USER = "root"
-MYSQL_PASSWORD = "newxin.001206"
+MYSQL_PASSWORD = "password"
 
 SQL_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 SQL_DATE_FORMAT = "%Y-%m-%d"
