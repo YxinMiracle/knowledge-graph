@@ -9,10 +9,12 @@ from itemadapter import ItemAdapter
 
 from twisted.enterprise import adbapi  # 实现异步入库
 
+
 class QuestionspiderPipeline:
     def process_item(self, item, spider):
         print(item)
         return item
+
 
 class MysqlTwistedPipeline(object):  # 异步入库
     def __init__(self, dbpool):
