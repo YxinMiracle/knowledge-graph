@@ -94,7 +94,7 @@ ITEM_PIPELINES = {
 MYSQL_HOST = "127.0.0.1"
 MYSQL_DBNAME = "crawlq"
 MYSQL_USER = "root"
-MYSQL_PASSWORD = "password"
+MYSQL_PASSWORD = "newxin.001206"
 
 SQL_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 SQL_DATE_FORMAT = "%Y-%m-%d"
