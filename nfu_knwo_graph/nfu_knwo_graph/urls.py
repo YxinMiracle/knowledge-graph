@@ -20,5 +20,7 @@ from app01 import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^index/', views.index),
-    url(r'^search/',views.search)
+    url(r'^search/', views.search, name="search"),
+    url(r'^suggest/', views.suggest, name="suggest"),
+    url(r'^search_result/', views.search_result, name="search_result"),
 ]

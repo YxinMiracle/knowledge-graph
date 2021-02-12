@@ -10,19 +10,37 @@
         }
 
         .logo {
-            height:260px;
+            height: 260px;
             width: 400px;
-            text-align:center;
+            text-align: center;
         }
 
-        #inputText{
+        #searchMsg {
             height: 50px;
         }
 
-        .subBtn{
-
+        .subBtn {
             height: 50px;
         }
+
+        .suggest {
+            z-index: 10;
+            background-color: #ffffff !important;
+            border-radius: 5px;
+        }
+
+        .suggest span {
+            font-size: 16px;
+            margin-top: 13px;
+            margin-bottom: 13px;
+        }
+
+        .suggest span:hover {
+            background-color: #b9def0;
+            cursor: pointer;
+        }
+
+
     </style>
 
 {% endblock css %}
@@ -37,10 +55,15 @@
                 <div class="search">
                     <img src="{% static 'img/logo.png' %}" alt="" class="logo">
                 </div>
-                <form>
+                <form action="{% url 'search_result' %}" method="get">
                     <div class="form-group col-sm-10">
-                        <input type="email" class="form-control" id="inputText" placeholder="请输入你的问题">
+                        <input type="text" class="form-control" placeholder="请输入你的问题" id="searchMsg"
+                               autocomplete="off" name="q">
+                        <div class="form-group col-sm-12 suggest">
+
+                        </div>
                     </div>
+
                     <button type="submit" class="btn btn-primary subBtn">搜索</button>
                 </form>
             </div>
@@ -48,10 +71,67 @@
         </div>
     </div>
 
-<div class="container" style="margin-top: 50px">
-    <div style="height: 300px;background-color: white">
-        不知道放什么东西，以后再说把
+    <div class="container" style="margin-top: 50px">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <header class="panel-heading">
+                    知识图谱中已有的数据：
+                </header>
+                <div class="panel-body">
+                    <div id="viz"></div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 
 {% endblock content %}
+
+{% block js %}
+
+    <script>
+        $("#searchMsg").on("input", function () {
+            var msg = $("#searchMsg").val();
+            if (msg === "") {
+                $('.suggest').html("");
+            }
+            if (msg) {
+                $.ajax({
+                    url: "{% url 'suggest' %}",
+                    type: "POST",
+                    data: {
+                        "suggest_msg": msg
+                    },
+                    success: function (data) {
+                        var html = '';
+                        $.each(data['suggest_result'], function (index, item) {
+                            html += '<span class="form-group col-sm-12">' + item + '</span>'
+                        })
+                        $('.suggest').html(html)
+                    }
+                })
+            }
+        });
+
+
+        // 建议器点击发送事件
+        $(".suggest").on("click", "span", function () {
+            $("#searchMsg").val("")
+            var su_msg = $(this).text();
+            $("#searchMsg").val(su_msg)
+        });
+    </script>
+
+    <script src="{% static 'js/graph.js' %}"></script>
+
+    <script>
+        var viz;
+
+        function draw() {
+            var config = getGraph("{{ query|safe }}")
+            viz = new NeoVis.default(config);
+            viz.render();
+        }
+        window.onload = draw();
+    </script>
+
+{% endblock js %}
