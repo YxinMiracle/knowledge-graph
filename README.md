@@ -3,7 +3,8 @@
 [![Fork me on Gitee](https://gitee.com/yxinmiracle/pic/raw/master/20210212192544.svg)](https://gitee.com/yxinmiracle/knowledge-graph)[![star](https://gitee.com/yxinmiracle/knowledge-graph/badge/star.svg?theme=dark)](https://gitee.com/yxinmiracle/knowledge-graph/stargazers)<a href='https://gitee.com/yxinmiracle/knowledge-graph/members'><img src='https://gitee.com/yxinmiracle/knowledge-graph/badge/fork.svg?theme=dark' alt='fork'></img></a>[![Fork me on Gitee](https://gitee.com/yxinmiracle/pic/raw/master/20210212192600.svg)](https://gitee.com/yxinmiracle/knowledge-graph)
 ### 卡片
 
-[![YxinMiracle/knowledge-graph](https://gitee.com/yxinmiracle/pic/raw/master/20210212192649.svg)](https://gitee.com/yxinmiracle/knowledge-graph)
+[![YxinMiracle/knowledge-graph](https://gitee.com/yxinmiracle/knowledge-graph/widgets/widget_card.svg?colors=f50808,ffffff,ffffff,e3e9ed,666666,9b9b9b)](https://gitee.com/yxinmiracle/knowledge-graph)
+
 
 ### 引用的技术
 Python3.8+Scrapy+Elasticsearch+Mysql+Neo4j+Django1.1
