@@ -1,5 +1,5 @@
 import openpyxl
-from py2neo import Graph, Node, Relationship, NodeMatcher
+from py2neo import Graph, Node, NodeMatcher
 from utils.tools import get_md5
 from elasticsearch import Elasticsearch
 from elasticsearch import helpers
@@ -8,6 +8,10 @@ es = Elasticsearch(['127.0.0.1:9200'])
 
 
 def get_data():
+    """
+    测试函数
+    :return:
+    """
     wb = openpyxl.load_workbook("c语言考纲.xlsx")
     sh = wb["Sheet1"]
     rows_list = list(sh.rows)[1:]
@@ -53,14 +57,14 @@ def update_node(wb):
     actions = []
     for row in rows_list:
         n = row[0].value  # 专有名词
-        # try:
-        #     exp = row[1].value.replace("\n", " ")  # 对应的解释
-        #     query = "match(p:`%s`) where p.name='%s' set p.desc='%s' return p" % (label, n, exp)
-        #     ret = g.run(query)
-        #     print(n, exp, ret)
-        # except:
-        #     # 含有特殊字符，目前不能解决
-        #     print("含有特殊字符，不能进行插入")
+        try:
+            exp = row[1].value.replace("\n", " ")  # 对应的解释
+            query = "match(p:`%s`) where p.name='%s' set p.desc='%s' return p" % (label, n, exp)
+            ret = g.run(query)
+            print(n, exp, ret)
+        except:
+            # 含有特殊字符，目前不能解决
+            print("含有特殊字符，不能进行插入")
         exp = row[1].value.replace("\n", " ")
         d = {
             "_index": "n_example",

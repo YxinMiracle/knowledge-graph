@@ -19,8 +19,10 @@ from app01 import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^index/', views.index),
-    url(r'^search/', views.search, name="search"),
-    url(r'^suggest/', views.suggest, name="suggest"),
-    url(r'^search_result/', views.search_result, name="search_result"),
+    url(r'^index/', views.Index.as_view(), name="index"),
+    url(r'^search/', views.Search.as_view(), name="search"),
+    url(r'^suggest/', views.Suggest.as_view(), name="suggest"),
+    url(r'^search_result/', views.SearchResult.as_view(), name="search_result"),
+    url(r'^explain/', views.Explain.as_view(), name="explain"),
+    url(r'^upload/', views.Upload_V.as_view(), name="upload"),
 ]
