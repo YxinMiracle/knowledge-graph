@@ -127,18 +127,6 @@
         });
     </script>
 
-    <script src="{% static 'js/graph.js' %}"></script>
 
-    <script>
-        var viz;
-
-        function draw() {
-            var config = getGraph("{{ query|safe }}")
-            viz = new NeoVis.default(config);
-            viz.render();
-        }
-
-        window.onload = draw();
-    </script>
 
 {% endblock js %}

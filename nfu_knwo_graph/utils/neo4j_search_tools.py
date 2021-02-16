@@ -1,7 +1,11 @@
+import os
+
 from py2neo import Graph
 
-
 # 用在前端问题搜索后的知识图谱显示，该方法是整个项目的败笔
+from nfu_knwo_graph.settings import BASE_DIR
+
+
 def get_query(result_list):
     tags_list = set()
     labels_list = set()
@@ -55,3 +59,15 @@ def get_question_n(question_n):
         name_list.append(name)
 
     return desc, ret_query, name_list
+
+
+def get_labels():
+    """将数据库中的label放入list中返回"""
+    with open(os.path.join(BASE_DIR, "labels"), encoding="utf-8") as fp:
+        line = fp.readline()
+    label_list = line.split(",")[:-1]
+    return label_list
+
+
+if __name__ == '__main__':
+    get_labels()

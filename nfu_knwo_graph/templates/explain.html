@@ -29,13 +29,13 @@
                         输入您想查询的专业名词：
                     </header>
                     <div class="panel-body">
-                        <div class="form-horizontal">
+                        <form class="form-horizontal" method="post">
                             <div class="form-group">
                                 <label for="question" class="col-sm-2 control-label">专业名词</label>
                                 <div class="col-sm-8">
                                     <input class="form-control" id="question"
                                            placeholder="请输入某个学科中的专业名词，用冒号分割，如（c语言:指针）："
-                                           autocomplete="off">
+                                           autocomplete="off" name="question_n" value="{{ question_n }}">
                                 </div>
                             </div>
 
@@ -44,7 +44,7 @@
                                     <button type="submit" class="btn btn-info" id="btn">查询</button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                     </header>
                     <div class="panel-body">
                         <textarea class="form-control" rows="5" id="ans">
-
+                            {{ desc }}
                         </textarea>
                     </div>
                 </div>
@@ -86,6 +86,9 @@
                     <div class="panel-body">
                         <nav>
                             <ul class="pager">
+                                {% for name in name_list %}
+                                    <li><a target='_blank' href="{% url 'search_result' %}?q={{ name }}">{{ name }}</a></li>
+                                {% endfor %}
 
                             </ul>
                         </nav>
@@ -97,49 +100,7 @@
 {% endblock content %}
 
 {% block js %}
-    <script src="{% static 'js/graph.js' %}"></script>
 
-
-    <script>
-        $("#btn").on("click", function () {
-            var question_n = $("#question").val();
-            if (question_n) {
-                $.ajax({
-                    url: "{% url 'explain' %}",
-                    type: "POST",
-                    data: {
-                        "question_n": question_n
-                    },
-                    success: function (data) {
-                        $("#ans").val(data["desc"]);
-                        var config = getGraph(data["ret_query"])
-                        viz = new NeoVis.default(config);
-                        viz.render();
-                        var html = '';
-                        $.each(data['name_list'], function (index, item) {
-                            var hrefStr = {% url 'search_result' %} +"?q=" + item;
-                            html += "<li><a target='_blank' href="+hrefStr+">" + item + "</a></li>"
-                        })
-                        $('.pager').html(html)
-                        console.log(data)
-                    }
-                })
-            }
-        })
-    </script>
-
-
-    <script>
-        var viz;
-
-        function draw() {
-            var config = getGraph("{{ query|safe }}")
-            viz = new NeoVis.default(config);
-            viz.render();
-        }
-
-        window.onload = draw();
-    </script>
 {% endblock js %}
 
 

@@ -130,6 +130,12 @@ def get_tags_name():
         actions.append(d)
     helpers.bulk(es, actions=actions)
 
+def get_labels():
+    """将数据库中的label返回"""
+    # g = Graph("http://localhost:7474", username="neo4j", password="newxin.001206")
+    # query = "match (n) return n"
+    # nodes = g.run(query).data()
+    pass
 
 if __name__ == '__main__':
     # wb = openpyxl.load_workbook("c#.xlsx")
@@ -139,4 +145,5 @@ if __name__ == '__main__':
     # # update_node(wb, label)
     # get_tags_name()
     # update_node(wb)
-    set_question()
+    # set_question()
+    get_labels()

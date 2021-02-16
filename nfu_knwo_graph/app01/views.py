@@ -3,7 +3,7 @@ from django.http import JsonResponse, HttpResponse
 
 from nfu_knwo_graph.settings import BASE_DIR
 from utils.es_search_tools import suggest_worker, get_question_and_tags
-from utils.neo4j_search_tools import get_query, get_question_n
+from utils.neo4j_search_tools import get_query, get_question_n, get_labels
 from django.views import View
 from utils.upload_tools import Upload
 
@@ -17,8 +17,9 @@ class Index(View):
 
 class Search(View):
     def get(self, request):
+        label_list = get_labels()
         query = "MATCH (n)-[r]->(m) RETURN m,n,r"
-        return render(request, "search.html", {"query": query})
+        return render(request, "search.html", {"query": query, "label_list": label_list})
 
 
 class Suggest(View):
@@ -32,9 +33,11 @@ class SearchResult(View):
     def get(self, request):
         question = request.GET.get('q')
         if question:
+            label_list = get_labels()
             result_list = get_question_and_tags(question)["hits"]["hits"]
             query = get_query(result_list)
-            return render(request, "search_result.html", {"result_list": result_list, "query": query})
+            return render(request, "search_result.html",
+                          {"result_list": result_list, "query": query, "label_list": label_list})
         else:
             print("没有得到question")
             return render(request, "search_result.html")
@@ -48,9 +51,10 @@ class Explain(View):
         question_n = request.POST.get("question_n")
         print(question_n)
         desc, ret_query, name_list = get_question_n(question_n)
-
-        ret = {"desc": desc, "ret_query": ret_query, "name_list": name_list}
-        return JsonResponse(ret)
+        label_list = get_labels()
+        return render(request, "explain.html",
+                      {"desc": desc, "query": ret_query, "name_list": name_list, "label_list": label_list,
+                       "question_n": question_n})
 
 
 class Upload_V(View):

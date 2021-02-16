@@ -1,5 +1,10 @@
+import os
+import time
+
 import openpyxl
 from py2neo import Graph, Node, NodeMatcher
+
+from nfu_knwo_graph.settings import BASE_DIR
 from utils.tools import get_md5
 from elasticsearch import Elasticsearch
 from elasticsearch import helpers
@@ -56,7 +61,7 @@ class Upload(object):
             query = "match(p:`%s`),(q:`%s`) where p._id='%s' and q._id='%s' create (p)-[r:%s]->(q)" % (
                 self.label, self.label, _name1_md5, _name2_md5, relationship_name)
             self.g.run(query)
-            print("yes!")
+            # print("yes!")
 
     def set_n_explain(self):
         """
@@ -70,10 +75,10 @@ class Upload(object):
             n = row[0].value  # 专有名词
             exp = row[1].value.replace("\n", " ")  # 对应的解释
             node = self.findNode(n)
-            print(node)
+            # print(node)
             node.update({"desc": exp})
             self.g.push(node)
-            print("成功插入：", n, exp)
+            # print("成功插入：", n, exp)
 
     def set_question(self):
         """
@@ -112,7 +117,6 @@ class Upload(object):
         actions = []
         for node in nodes:
             node_name = node.get('n').get("name")
-            print(node_name)
             d = {
                 "_index": "tags",
                 "_type": "doc",
@@ -124,9 +128,20 @@ class Upload(object):
         helpers.bulk(self.es, actions=actions)
         print("插入提示词语功能结束")
 
+    def write_label(self):
+        with open(os.path.join(BASE_DIR,"labels"), "a+", encoding="utf-8") as fp:
+            write_str = self.label + ","
+            fp.write(write_str)
+
     def run(self):
         self.create_node()
         self.set_n_explain()
         self.set_question()
         self.get_tags_name()
+        self.write_label()
 
+if __name__ == '__main__':
+    with open("../labels", "a+", encoding="utf-8") as fp:
+        write_str = "c语言" + ","
+        print(write_str)
+        fp.write(write_str)

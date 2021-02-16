@@ -1,10 +1,47 @@
 {% extends "home.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+
+    </style>
+{% endblock css %}
 
 {% block content %}
 
-    <form action="" method="post" enctype="multipart/form-data">
-        <input type="file" name="upload_file">
-        <input type="submit">
-    </form>
+    <div class="droppable">
+        <div class="info-drag info-item">
+            <h1 style="margin-bottom: 50px"><i class="fa fa-upload" aria-hidden="true"></i>文件上传</h1>
+            <div class="container">
+                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+
+                    <div class="form-group">
+                        <label for="inputPassword" class="col-sm-2 control-label">label</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="inputPassword" placeholder="该学科的名字">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="up_file" class="col-sm-2 control-label">文件选择</label>
+                        <div class="col-sm-6">
+                            <input type="file" name="upload_file" id="up_file">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="btn" class="col-sm-2 control-label">点击上传</label>
+                        <div class="col-sm-6">
+                            <input type="submit" class="btn btn-info">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 {% endblock content %}
+
+{% block js %}
+    <script src="{% static 'js/gsap.min.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+{% endblock js %}
