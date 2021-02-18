@@ -117,23 +117,29 @@ PUT question
 
 ![image-20210218080807643](https://gitee.com/yxinmiracle/pic/raw/master/20210218080807.png)
 
-#### （5）上传文件的规则提醒
+#### （5）题目详解
+
+![image-20210218173752516](https://gitee.com/yxinmiracle/pic/raw/master/20210218173752.png)
+
+
+
+#### （6）上传文件的规则提醒
 
 ![image-20210218080625573](https://gitee.com/yxinmiracle/pic/raw/master/20210218080625.png)
 
-#### （6）上传文件
+#### （7）上传文件
 
 ![image-20210218080644327](https://gitee.com/yxinmiracle/pic/raw/master/20210218080644.png)
 
-#### （7）上传文件成功
+#### （8）上传文件成功
 
 ![image-20210218080710988](https://gitee.com/yxinmiracle/pic/raw/master/20210218080711.png)
 
-#### （8）名词解释
+#### （9）名词解释
 
 ![image-20210218080849933](https://gitee.com/yxinmiracle/pic/raw/master/20210218080850.png)
 
-#### （9）快速导航
+#### （10）快速导航
 
 ![image-20210218081009302](https://gitee.com/yxinmiracle/pic/raw/master/20210218081009.png)
 
