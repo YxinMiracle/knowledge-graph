@@ -50,6 +50,16 @@ def suggest_worker(msg):
     return {"suggest_result": list(l)}
 
 
+def get_tags(res):
+    hit_list = res["hits"]["hits"]
+    tags_list = set()
+    for result in hit_list:
+        tags = result["_source"]["tags"].split(" ")
+        for _tag in tags:
+            tags_list.add(_tag)
+    return list(tags_list)
+
+
 def get_question_and_tags(question):
     body = {
         "query": {
@@ -57,6 +67,8 @@ def get_question_and_tags(question):
                 "question": question
             }
         },
+        "size": 10000,
+        "from": 0,
         "highlight": {
             "pre_tags": "<b style='color:green;'>",
             "post_tags": "</b>",
@@ -66,4 +78,28 @@ def get_question_and_tags(question):
         }
     }
     res = es.search(index="question", doc_type="doc", body=body)
-    return res
+    tags_list = get_tags(res)
+    return res, tags_list
+
+
+def get_ans(question):
+    body = {
+        "query": {
+            "match": {
+                "question": question
+            }
+        },
+        "size": 1,
+        "from": 0,
+    }
+    res = es.search(index="question", doc_type="doc", body=body)["hits"]["hits"][0]
+    ret_dict = {}
+    ret_dict["question"] = res["_source"]["question"]
+    ret_dict["A"] = res["_source"]["A"]
+    ret_dict["B"] = res["_source"]["B"]
+    ret_dict["C"] = res["_source"]["C"]
+    ret_dict["D"] = res["_source"]["D"]
+    ret_dict["ans"] = res["_source"]["ans"]
+    ret_dict["tags"] = res["_source"]["tags"]
+    ret_dict["label"] = res["_source"]["label"]
+    return ret_dict

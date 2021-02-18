@@ -25,4 +25,8 @@ urlpatterns = [
     url(r'^search_result/', views.SearchResult.as_view(), name="search_result"),
     url(r'^explain/', views.Explain.as_view(), name="explain"),
     url(r'^upload/', views.Upload_V.as_view(), name="upload"),
+    url(r'^getAns/', views.GetAns.as_view(), name="getAns"),
+    url(r'^rule/', views.UploadRule.as_view(), name="rule"),
+    url(r'^go/', views.Go.as_view(), name="go"),
+    url(r'^upload_ok/', views.Ok.as_view(), name="upload_ok"),
 ]

@@ -5,20 +5,23 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>Bootstrap 101 Template</title>
 
-    <!-- Bootstrap -->
     <link href="{% static "bootstrap-3.3.7-dist/css/bootstrap.min.css" %}" rel="stylesheet">
     <link href="{% static "font-awesome-4.7.0/css/font-awesome.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/navbar.css" %}" rel="stylesheet">
+    <link href="{% static "css/signform.css" %}" rel="stylesheet">
+    <link href="{% static "css/style-0.0.8.css" %}" rel="stylesheet">
+    <link href="{% static "css/iconfont.css" %}" rel="stylesheet">
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
     <script src="{% static "js/1.js" %}"></script>
     <script src="{% static "js/2.js" %}"></script>
+    <script src="{% static "js/signform-0.0.1.js" %}"></script>
     <style>
         body {
-            background-color: rgba(222, 213, 213, 0.35);
+            background-image: url("{% static 'img/background.png' %}");
         }
-
-
     </style>
 
     {% block css %}
@@ -27,49 +30,31 @@
 </head>
 <body>
 
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">PEC机器人知识图谱</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">关系查询 <span class="sr-only">(current)</span></a></li>
-                <li><a href="">智能问答</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">管理员录入数据<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">One more separated link</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <form class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
-                </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-            </form>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
-
+<div class="navbar navbar-default">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="/" title="PEC智能机器人，您学习的最佳选择">PEC智能机器人</a>
+    <div class="collapse navbar-collapse" id="topNavBar">
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="{% url 'search' %}">首页</a></li>
+            <li class=""><a href="">题库</a></li>
+            <li class=""><a href="{% url 'rule' %}">上传文件规则</a></li>
+            <li class=""><a href="{% url 'upload' %}">上传文件</a></li>
+            <li class=""><a href="{% url 'explain' %}">名词解释</a></li>
+            <li class=""><a href="{% url 'go' %}">快速导航</a></li>
+            <li class=""><a href="">应用</a></li>
+            <li class=""><a href="">吐槽</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="#" data-toggle="modal" data-target="#login-modal">登录/注册</a>
+            </li>
+        </ul>
+    </div>
+</div>
 {% block content %}
 
     {#子html文件的内容#}
@@ -77,8 +62,7 @@
 {% endblock content %}
 </body>
 
-<script src="{% static 'js/jquery.js' %}"></script>
-<script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+
 <script>
     function draw(query_str) {
         var viz;
@@ -123,5 +107,22 @@
 <script>
     window.onload = draw();
 </script>
+
+
+<script>
+    // 判断是哪个li标签需要添加active
+    var current_path = location.pathname;
+    if (current_path === "/upload_ok/") {
+        current_path = "/upload/"
+    }
+    var toActiveLiTag = $("a[href='" + current_path + "']");
+    toActiveLiTag.parent().addClass("active");
+    toActiveLiTag.parent().siblings().removeClass("active");
+    console.log(toActiveLiTag)
+</script>
+
+{% block js %}
+
+{% endblock js %}
 
 </html>

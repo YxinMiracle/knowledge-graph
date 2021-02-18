@@ -1,18 +1,323 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>Bootstrap 101 Template</title>
+{% extends "home.html" %}
+{% load static %}
 
-    <!-- Bootstrap -->
-    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+{% block css %}
+    <style>
+        img {
+            height: 170px;
+            width: 419px;
+        }
 
-</head>
-<body>
-<h1>你好，世界！</h1>
+        .top_search {
+            height: 200px
+        }
 
-</body>
-</html>
+        .miracle-search-b {
+            margin-top: 6%;
+        }
+
+        form {
+            width: 100%;
+        }
+
+        .form-control {
+            width: 80% !important;
+        }
+
+        .miracle-input {
+            padding: 0;
+        }
+
+
+        .q_div p {
+            font: 18px Arial, sans-serif;
+            color: #333;
+        }
+
+        .c-showurl {
+            color: #626675;
+            font-family: Arial, sans-serif;
+        }
+
+        .c-icon {
+            font-family: cIconfont !important;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            display: inline-block;
+            vertical-align: text-bottom;
+            font-family: none;
+            width: 43px;
+            height: 17px;
+            background-image: url({% static 'img/bao_02f5d40.svg' %});
+            background-repeat: no-repeat;
+            background-size: contain;
+            position: relative;
+            top: 1px;
+        }
+
+        #viz {
+            height: 600px;
+        }
+
+        .miracle-top {
+
+        }
+
+        .shadow {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+        }
+
+        .mode {
+            position: fixed;
+            height: 500px;
+            width: 500px;
+            background-color: white;
+            z-index: 100;
+            left: 50%;
+            top: 50%;
+            margin-left: -250px;
+            margin-top: -250px;
+
+        }
+
+        .miracle-tag {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .miracle-ans {
+            font-size: 18px;
+            color: #111111;
+        }
+
+        .suggest {
+            z-index: 10;
+            background-color: #ffffff !important;
+            border-radius: 5px;
+        }
+
+        .suggest span {
+            font-size: 16px;
+            margin-top: 13px;
+            margin-bottom: 13px;
+        }
+
+        .suggest span:hover {
+            background-color: #b9def0;
+            cursor: pointer;
+        }
+
+        .miracle-input .col-lg-10 {
+            width: 80.333333%;
+        }
+
+
+    </style>
+{% endblock css %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="top_search row">
+                    <div class="col-lg-4">
+                        <img src="{% static 'img/res_logo.png' %}" alt="">
+                    </div>
+                    <div class="col-lg-6 miracle-search-b">
+                        <form action="" style="display: inline-block" class="form_block form-inline">
+                            <div class="navbar-brand">
+                                <div class="row">
+                                    <div><i class="fa fa-search" aria-hidden="true"></i> PEC机器人之智能搜索</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <form action="{% url 'search_result' %}" method="get">
+                                    <div class="col-lg-12 miracle-input">
+                                        <input type="text" class="form-control"
+                                               id="searchMsg"
+                                               placeholder="请输入你的问题" value="{{ question }}" autocomplete="off" name="q">
+                                        <div class="form-group col-lg-10 suggest">
+
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">搜索</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div>
+                                <div id="file-content-abstract-field-1829424"
+                                     class="panel panel-default about-index-file-panel">
+                                    <div class="panel-body about-index-file-panel-body">
+                                        <div id="miracle-content">
+
+                                        </div>
+                                        <div class="page">
+                                            <nav aria-label="Page navigation">
+                                                <ul class="pagination">
+                                                    {{ page_msg }}
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <header class="panel-heading">
+                        此问题相关的知识点联系
+                    </header>
+                    <div class="panel-body">
+                        <div id="viz"></div>
+                    </div>
+                    <header class="panel-heading">
+                        此问题相关的知识点标签
+                    </header>
+                    <div class="panel-body">
+                        <nav aria-label="...">
+                            <ul class="pager">
+                                {% for tags in tags_list %}
+                                    <li><a href="#">{{ tags }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!--答案解析-->
+    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" style="width: 85%; max-width: 670px">
+            <div class="modal-content">
+                <div class="modal-header" align="center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                    <span class="acwing-brand">PEC答案解析</span>
+                </div>
+
+                <div id="div-forms">
+                    <div class="modal-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block js %}
+    <script>
+        var result_list = {{ result_list|safe }};
+        var html = ""
+        $.each(result_list, function (index, item) {
+            var question = item["highlight"]["question"];
+            var ans_item = item["_source"];
+            var p_text = ans_item["A"] + ans_item["B"] + ans_item["C"] + ans_item["D"]
+            html += '            <div class="q_div">\n' +
+                '                <a class="get-ans" data-toggle="modal" data-target="#login-modal">\n' +
+                '                    <h2>' + question + '</h2>\n' +
+                '                </a>\n' +
+                '                <p>' + p_text + '</p>\n' +
+                '                <a target="_blank" href="#" style="text-decoration:none;position:relative;"\n' +
+                '                   class="c-showurl">PEC智能机器人</a>\n' +
+                '                <i class="c-icon"></i>\n' +
+                '            </div>'
+        });
+        $('#miracle-content').html(html)
+    </script>
+
+    <script>
+        $(".get-ans").on("click", 'h2', function () {
+            var question = $(this).text();
+            console.log(question);
+            $.ajax({
+                url: "{% url 'getAns' %}",
+                type: "POST",
+                data: {
+                    "question": question
+                },
+                success: function (data) {
+                    var get_tags_list = ["question", "A", "B", "C", "D", "ans", "tags", "label"]
+                    var input_tags = ["问 题:", "选项 A：", "选项 B：", "选项 C：", "选项 D：", "答 案：", "该问题的标签", "该问题所属学科"]
+                    html = "";
+                    for (let i = 0; i < get_tags_list.length; i++) {
+                        var key = get_tags_list[i];
+                        var input_tag = input_tags[i];
+                        html += '                        <div class="row" style="margin-bottom: 15px">\n' +
+                            '                            <div class="col-lg-2 miracle-tag">' + input_tag + '</div>\n' +
+                            '                            <div class="col-lg-10 miracle-ans">\n' +
+                            '                               ' + data[key] + '\n' +
+                            '                            </div>\n' +
+                            '                        </div>'
+                    }
+                    $(".modal-body").html(html)
+                }
+            })
+        })
+    </script>
+
+    <script>
+        $("#searchMsg").on("input", function () {
+            var msg = $("#searchMsg").val();
+            if (msg === "") {
+                $('.suggest').html("");
+            }
+            if (msg) {
+                $.ajax({
+                    url: "{% url 'suggest' %}",
+                    type: "POST",
+                    data: {
+                        "suggest_msg": msg
+                    },
+                    success: function (data) {
+                        var html = '';
+                        $.each(data['suggest_result'], function (index, item) {
+                            html += '<span class="form-group col-sm-12">' + item + '</span>'
+                        })
+                        $('.suggest').html(html)
+                    }
+                })
+            }
+        });
+
+
+        // 建议器点击发送事件
+        $(".suggest").on("click", "span", function () {
+            $("#searchMsg").val("")
+            var su_msg = $(this).text();
+            $("#searchMsg").val(su_msg)
+        });
+    </script>
+
+    <script>
+        $('.pagination').on("click", "li a", function () {
+            if ($(this).attr('page') !== "None") {
+                var current_page = $(this).attr('page');
+                var question = $("#searchMsg").val();
+                location.href = "http://127.0.0.1:8000/search_result/?q=" + question + "&page=" + current_page; // /12.../
+            }
+        })
+    </script>
+{% endblock js %}

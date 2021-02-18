@@ -91,7 +91,7 @@ class Upload(object):
         for row in rows_list:
             question = row[0].value
             A, B, C, D, ans = row[1].value, row[2].value, row[3].value, row[4].value, row[5].value
-            tags = " ".join((row[6].value).split("/"))
+            tags = "  ".join((row[6].value).split("/"))
             d = {
                 "_index": "question",
                 "_type": "doc",

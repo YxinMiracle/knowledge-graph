@@ -1,18 +1,38 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>Bootstrap 101 Template</title>
+{% extends "home.html" %}
+{% load static %}
 
-    <!-- Bootstrap -->
-    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .miracle-to-upload {
+            text-decoration: none;
+            font-size: 18px;
+            color: #403e3e;
+        }
 
-</head>
-<body>
-<h1>你好，世界！</h1>
+        .miracle-to-upload:hover{
+            color: #ffa309;
+            text-decoration: none;
+        }
+    </style>
+{% endblock css %}
 
-</body>
-</html>
+{% block content %}
+
+    <div class="droppable">
+        <div class="info-drag info-item">
+            <h1 style="color: rgba(36,191,36,0.85)"><i class="glyphicon glyphicon-ok" aria-hidden="true"></i> 文件上传成功啦！
+            </h1>
+            <a class="miracle-to-upload" href="{% url 'upload' %}">点击继续上传</a>
+            <a class="miracle-to-upload" href="{% url 'search' %}">点击返回首页</a>
+            <div class="container">
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'js/gsap.min.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+{% endblock js %}

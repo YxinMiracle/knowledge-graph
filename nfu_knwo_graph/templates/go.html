@@ -1,18 +1,302 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>Bootstrap 101 Template</title>
+{% extends 'home.html' %}
+{% load static %}
 
-    <!-- Bootstrap -->
-    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/miracle-style.css' %}">
 
-</head>
-<body>
-<h1>你好，世界！</h1>
+{% endblock css %}
 
-</body>
-</html>
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-header"><i class="fa fa-car" aria-hidden="true"></i> 导航窗口 </h3>
+                <ol class="breadcrumb">
+                    <li><i class="fa fa-home"></i><a href="#">主页</a></li>
+                    <li><i class="fa fa-car" aria-hidden="true"></i>导航窗口</li>
+                </ol>
+            </div>
+
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <header class="panel-heading">
+                        便捷应用：
+                    </header>
+                    <div class="panel-body">
+                        <div class="list-url-quick" id="js_list-url-quick">
+                            <ul>
+                                <li class="li-append">
+                                    <a href="https://tool.oschina.net/jscompress/" target="_blank"
+                                       class="btn-link ksd-open-link"
+                                       title="css在线压缩">
+                                        <span class="ksdiconbtn">
+                                            <i class="iconfont icon-css"
+                                               style="font-size: 29px;position: absolute;top: 25px;left:0;right:0;"></i></span>
+                                        <p>css在线压缩</p>
+                                    </a>
+                                </li>
+                                <li class="li-append">
+                                    <a href="https://tool.chinaz.com/tools/jscodeconfusion.aspx" target="_blank"
+                                       class="btn-link ksd-open-link"
+                                       title="js混淆">
+                                        <span class="ksdiconbtn">
+                                            <i class="iconfont icon-js"
+                                               style="font-size: 29px;position: absolute;top: 25px;left:0;right:0;"></i></span>
+                                        <p>js混淆</p>
+                                    </a>
+                                </li>
+                                <li class="li-append">
+                                    <a href="https://www.json.cn/" target="_blank"
+                                       class="btn-link ksd-open-link"
+                                       title="json格式化">
+                                        <span class="ksdiconbtn">
+                                            <i class="iconfont icon-json"
+                                               style="font-size: 29px;position: absolute;top: 25px;left:0;right:0;"></i></span>
+                                        <p>json格式化</p>
+                                    </a>
+                                </li>
+                                <li class="li-append">
+                                    <a href="http://tool.chinaz.com/tools/base64.aspx" target="_blank"
+                                       class="btn-link ksd-open-link"
+                                       title="base64加密解密">
+                                        <span class="ksdiconbtn">
+                                            <i class="iconfont icon-base"
+                                               style="font-size: 29px;position: absolute;top: 25px;left:0;right:0;"></i></span>
+                                        <p>base64加密解密</p>
+                                    </a>
+                                </li>
+                                <li class="li-append">
+                                    <a href="#" target="_blank"
+                                       class="btn-link ksd-open-link"
+                                       title="css在线压缩">
+                                        <span class="ksdiconbtn">
+                                            <i class="iconfont icon-tianjia"
+                                               style="font-size: 29px;position: absolute;top: 25px;left:0;right:0;"></i></span>
+                                        <p>尽情期待....</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <header class="panel-heading">
+                        推荐导航：
+                    </header>
+                    <div class="panel-body">
+                        <div class="list-url-suggest">
+                            <ul>
+                                <li>
+                                    <a href="https://www.aliyun.com/minisite/goods?userCode=0phtycgr" target="_blank">
+                                        <img src="https://www.aliyun.com/favicon.ico">
+                                        <span>服务器购买</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.bilibili.com/" target="_blank">
+                                        <img src="https://space.bilibili.com/favicon.ico">
+                                        <span>哔哩哔哩</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.zhihu.com/" target="_blank">
+                                        <img src="https://www.zhihu.com/favicon.ico">
+                                        <span>知乎</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.toutiao.com/"
+                                       target="_blank">
+                                        <img src="https://www.toutiao.com/favicon.ico">
+                                        <span>今日头条</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://ke.qq.com/" target="_blank">
+                                        <img src="https://xuexiangban.ke.qq.com/favicon.ico">
+                                        <span>腾讯课堂</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.yunbase.net/vps/lagia/?aff=22" target="_blank">
+                                        <img src="https://www.yunbase.net/favicon.ico">
+                                        <span>云基-服务器</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.wafcloud.net/" target="_blank">
+                                        <img src="https://www.wafcloud.net/favicon.ico">
+                                        <span>乌云盾-CDN</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.kuangstudy.com" target="_blank">
+                                        <img src="https://www.kuangstudy.com/favicon.ico">
+                                        <span>KuangStudy</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://gitee.com/yxinmiracle" target="_blank">
+                                        <img src="https://gitee.com/favicon.ico">
+                                        <span>码云</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.taobao.com/" target="_blank">
+                                        <img src="https://www.taobao.com/favicon.ico">
+                                        <span>淘宝</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.qq.com/" target="_blank">
+                                        <img src="https://www.qq.com/favicon.ico">
+                                        <span>腾讯新闻</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.cctv.com/" target="_blank">
+                                        <img src="https://www.cctv.com/favicon.ico">
+                                        <span>央视网</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://y.qq.com/" target="_blank">
+                                        <img src="https://y.qq.com/favicon.ico">
+                                        <span>QQ音乐</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://music.163.com/" target="_blank">
+                                        <img src="https://s1.music.126.net/style/favicon.ico?v20180823">
+                                        <span>网易云音乐</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://fanyi.baidu.com/" target="_blank">
+                                        <img src="https://fanyi.baidu.com/favicon.ico">
+                                        <span>百度翻译</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://lanhuapp.com/" target="_blank">
+                                        <img src="data:image/x-icon;base64,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+f/4uqb/8XNL//FySf/xckn/8XJJ//FySf/xckn5/4CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPFySc/xckn/8XJJ//FySf/xckn/+sq7///////////////////////////////////////6yrv/8XJJ//FySf/xckn/8XJJ//FySeUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8XJJxfFySf/xckn/8XJJ//adgf///////////////////////////+jm5v/U0dH/9/b2///////1nYD/8XJJ//FySf/xckn/8XJJ2QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADxckm98XJJ//FySf/xckn/+9jM//////////////////////+Rioj/QTUy/0E1Mv9SR0T/0s/P//vXy//xckn/8XJJ//FySf/xcknTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPFySbfxckn/8XJJ//FySf/+9fL/////////////////xcHA/0E1Mv9BNTL/QTUy/0E1Mv9YTkv//vTx//FySf/xckn/8XJJ//FySc8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8XJJpfFySf/xckn/8XJJ//749v////////////////+clpT/QTUy/0E1Mv9BNTL/QTUy/0E1Mv/t5OH/8XJJ//FySf/xckn/8XJJuwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADxckmJ8XJJ//FySf/xckn//OPb/////////////////7q2tf9BNTL/QTUy/0E1Mv9BNTL/T0RB//vg1//xckn/8XJJ//FySf/xckmhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPJzSkzxckn/8XJJ//FySf/3s5z//////////////////Pz8/3dubP9BNTL/QTUy/0Y7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">
+                                        <span>蓝湖</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.processon.com/" target="_blank">
+                                        <img src="https://www.processon.com/favicon.ico">
+                                        <span>processon</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://pay.weixin.qq.com/" target="_blank">
+                                        <img src="https://wx.gtimg.com/core/favicon.ico">
+                                        <span>微信支付</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://open.weixin.qq.com/" target="_blank">
+                                        <img src="https://res.wx.qq.com/a/wx_fed/assets/res/NTI4MWU5.ico">
+                                        <span>微信开放平台</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.alipay.com/" target="_blank">
+                                        <img src="https://img.alicdn.com/tfs/TB1qEwuzrj1gK0jSZFOXXc7GpXa-32-32.ico">
+                                        <span>支付宝</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.aliyun.com/" target="_blank">
+                                        <img src="https://www.aliyun.com/favicon.ico">
+                                        <span>阿里云</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.zcool.com.cn/discover" target="_blank">
+                                        <img src="https://static.zcool.cn/git_z/z/site/favicon.ico?version=1606222881216">
+                                        <span>站酷网</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://huaban.com/discovery/" target="_blank">
+                                        <img src="https://huaban.com/img/touch-icon-iphone-retina.png">
+                                        <span>花瓣网</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.nowcoder.com/contestRoom" target="_blank">
+                                        <img src="https://www.nowcoder.com/favicon.ico">
+                                        <span>牛客网</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://leetcode-cn.com/problemset/all/" target="_blank">
+                                        <img src="https://leetcode-cn.com/favicon.ico">
+                                        <span>LeetCode</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="http://piaofang.maoyan.com/dashboard" target="_blank">
+                                        <img src="http://s0.meituan.net/bs/?f=myfe/piaofang:img/favicon-f8defb48.ico">
+                                        <span>电影实时票房</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.ui.cn/" target="_blank">
+                                        <img src="https://www.ui.cn/favicon.ico">
+                                        <span>UI中国</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://ziyuan.baidu.com/" target="_blank">
+                                        <img src="https://ziyuan.baidu.com/favicon.ico">
+                                        <span>百度资源</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://favor.fund.eastmoney.com/" target="_blank">
+                                        <img src="https://favor.fund.eastmoney.com/favicon.ico">
+                                        <span>天天基金网</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="http://iconfont.cn/" target="_blank">
+                                        <img src="https://img.alicdn.com/tps/i4/TB1_oz6GVXXXXaFXpXXJDFnIXXX-64-64.ico">
+                                        <span>iconfont</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.bootcdn.cn/" target="_blank">
+                                        <img src="https://www.bootcdn.cn/assets/ico/favicon.ico?1608299009206">
+                                        <span>BootCDN</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://mp.weixin.qq.com/" target="_blank">
+                                        <img src="https://wx.gtimg.com/core/favicon.ico">
+                                        <span>微信公众平台</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://connect.qq.com/index.html" target="_blank">
+                                        <img src="https://connect.qq.com/favicon.ico">
+                                        <span>QQ互联</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+{% endblock content %}
