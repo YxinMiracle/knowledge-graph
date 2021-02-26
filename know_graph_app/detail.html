@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Document</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+		<style>
+			.miracle-tag {
+				font-weight: bold;
+				font-size: 16px;
+			}
+			
+			.miracle-ans {
+				font-size: 18px;
+				color: #111111;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">PEC答案详解</h1>
+		</header>
+		<div class="mui-content">
+			<div style="text-align: center;margin-top: 35px;">
+				<img width="300px" src="./img/res_logo.png" alt="">
+			</div>
+			<div id="content" style="margin-top: 20px;">
+
+			</div>
+		</div>
+		<script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+
+			mui.plusReady(function() {
+				var cr_wv = plus.webview.currentWebview();
+				var html = cr_wv.data;
+				document.getElementById("content").innerHTML = html;
+
+			})
+		</script>
+	</body>
+</html>

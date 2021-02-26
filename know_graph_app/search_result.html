@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Document</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<style>
+			.top_search {
+				height: 200px
+			}
+
+			.miracle-search-b {
+				margin-top: 6%;
+			}
+
+			form {
+				width: 100%;
+			}
+
+			.form-control {
+				width: 80% !important;
+			}
+
+			.miracle-input {
+				padding: 0;
+			}
+
+			.q_div {
+				margin-top: 20px;
+			}
+
+			.q_div p {
+				font: 18px Arial, sans-serif;
+				color: #333;
+			}
+
+			.c-showurl {
+				color: #626675;
+				font-family: Arial, sans-serif;
+			}
+
+			.c-icon {
+				font-family: cIconfont !important;
+				font-style: normal;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+				display: inline-block;
+				vertical-align: text-bottom;
+				font-family: none;
+				width: 43px;
+				height: 17px;
+				background-image: url("./img/bao_02f5d40.svg;");
+				background-repeat: no-repeat;
+				background-size: contain;
+				position: relative;
+				top: 1px;
+			}
+
+			#viz {
+				height: 400px;
+			}
+
+			.miracle-top {}
+
+			.shadow {
+				position: fixed;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				background-color: rgba(0, 0, 0, 0.5);
+				z-index: 99;
+			}
+
+			.mode {
+				position: fixed;
+				height: 500px;
+				width: 500px;
+				background-color: white;
+				z-index: 100;
+				left: 50%;
+				top: 50%;
+				margin-left: -250px;
+				margin-top: -250px;
+
+			}
+
+			.suggest {
+				z-index: 10;
+				background-color: #ffffff !important;
+				border-radius: 5px;
+			}
+
+			.suggest span {
+				font-size: 16px;
+				margin-top: 13px;
+				margin-bottom: 13px;
+			}
+
+			.suggest span:hover {
+				background-color: #b9def0;
+				cursor: pointer;
+			}
+
+			.miracle-input .col-lg-10 {
+				width: 80.333333%;
+			}
+		</style>
+		<link rel="stylesheet" type="text/css" href="css/signform.css" />
+		<link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">PEC机器人搜索结果</h1>
+		</header>
+		<div class="mui-content">
+			<div style="text-align: center;margin-top: 35px;">
+				<img width="300px" src="./img/res_logo.png" alt="">
+			</div>
+			<div style="margin-top: 20px;border:1px solid #000000;">
+				<div class="mui-input-row mui-plus-visible">
+					<label>请输入问题 :</label>
+					<input type="text" class="mui-input-speech mui-input-clear" placeholder="语音输入" id="input_tag">
+				</div>
+
+			</div>
+			<div>
+				<div class="mui-button-row" style="margin-top: 10px;">
+					<button type="button" class="mui-btn mui-btn-blue mui-btn-block">点击搜索</button>
+					<button type="button" class="mui-btn mui-btn-purple mui-btn-block" id="uploder_pic">拍照搜题</button>
+				</div>
+			</div>
+			<div id="miracle-content" style="width: 94%; margin-left: 3%;border: #000000 solid 1px;margin-top: 20px;">
+
+			</div>
+			<hr>
+			<div class="panel panel-default" style="width: 94%; margin-left:3%">
+				<header class="panel-heading">
+					知识图谱中已有的数据：
+				</header>
+				<div class="panel-body">
+					<div id="viz"></div>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/neovis-without-dependencies.js"></script>
+		<script src="js/jquery.js"></script>
+		<script src="js/signform-0.0.1.js"></script>
+		<script src="js/neovis.js"></script>
+		<script type="text/javascript">
+			mui.init();
+		</script>
+		<script>
+			mui.plusReady(function() {
+				var sr_wv = plus.webview.currentWebview();
+				var content = sr_wv.content; 
+				// console.log(JSON.stringify(content));
+				if (content.code == 0) {
+					document.getElementById("input_tag").value = content.data.question;
+					getAns(content.data.result_list);
+					draw(content.data.query);
+				}
+			})
+
+			function getAns(result_list) {
+				var html = ""
+				result_list.forEach(function(item) {
+					var question = item["highlight"]["question"];
+					var ans_item = item["_source"];
+					var p_text = ans_item["A"] + ans_item["B"] + ans_item["C"] + ans_item["D"]
+
+					var div_tag = document.createElement("div");
+					div_tag.className = "q_div";
+
+					var a_tag = document.createElement("a");
+					a_tag.className = "get-ans"
+					a_tag.setAttribute("data-toggle", "modal");
+					a_tag.setAttribute("data-target", "#login-modal");
+
+					var h2_tag = document.createElement("h2");
+					h2_tag.innerHTML = question
+
+					a_tag.addEventListener("tap", function() {
+						mui.post(window.serv + "/getAns", {
+							question: question
+						}, function(data) {
+							console.log(JSON.stringify(data));
+							mui.openWindow({
+								url: 'detail.html',
+								id: 'detail',
+								styles: {
+									top: "0px",
+									bottom: "50px"
+								},
+								extras: {
+									data: getAnsFun(data)
+								}
+							});
+
+						}, 'json');
+					})
+
+					var p_tag = document.createElement("p");
+					p_tag.innerText = p_text
+
+					var a2_tag = document.createElement("a");
+					a2_tag.setAttribute("target", "_blank");
+					a2_tag.setAttribute("href", "#");
+					a2_tag.setAttribute("style", "text-decoration:none;position:relative;");
+					a2_tag.className = "c-showurl";
+					a2_tag.innerText = "PEC智能机器人"
+
+					var i_tag = document.createElement("i");
+					i_tag.className = "c-icon";
+
+					a_tag.appendChild(h2_tag);
+					div_tag.appendChild(a_tag);
+					div_tag.appendChild(p_tag);
+					div_tag.appendChild(a2_tag);
+					div_tag.appendChild(i_tag);
+
+					document.getElementById("miracle-content").appendChild(div_tag);
+				});
+
+			}
+		</script>
+
+		<script>
+			function draw(query) {
+				console.log(query); 
+				var viz;
+				var config = {
+					container_id: "\x76\x69\x7a",
+					server_url: window.neo4j_serv,
+					server_user: "\x6e\x65\x6f\x34\x6a",
+					server_password: "\x6e\x65\x77\x78\x69\x6e\x2e\x30\x30\x31\x32\x30\x36",
+					labels: {
+						"c语言": {
+							"\x63\x61\x70\x74\x69\x6f\x6e": "\x6e\x61\x6d\x65",
+							"\x74\x69\x74\x6c\x65\x5f\x70\x72\x6f\x70\x65\x72\x74\x69\x65\x73": ["\x6e\x61\x6d\x65", "\x5f\x69\x64",
+								"\x64\x65\x73\x63", '\x6c\x61\x62\x65\x6c'
+							]
+						},
+
+						"python": {
+							"\x63\x61\x70\x74\x69\x6f\x6e": "\x6e\x61\x6d\x65",
+							"\x74\x69\x74\x6c\x65\x5f\x70\x72\x6f\x70\x65\x72\x74\x69\x65\x73": ["\x6e\x61\x6d\x65", "\x5f\x69\x64",
+								"\x64\x65\x73\x63", '\x6c\x61\x62\x65\x6c'
+							]
+						},
+
+					},
+					relationships: {
+						"\u77e5\u8bc6\u70b9": {
+							"\x74\x68\x69\x63\x6b\x6e\x65\x73\x73": "\x77\x65\x69\x67\x68\x74",
+							"\x63\x61\x70\x74\x69\x6f\x6e": true,
+						},
+						"\u8be6\u7ec6": {
+							"\x74\x68\x69\x63\x6b\x6e\x65\x73\x73": "\x77\x65\x69\x67\x68\x74",
+							"\x63\x61\x70\x74\x69\x6f\x6e": true,
+						},
+					},
+
+					initial_cypher: query,
+
+				};
+				viz = new NeoVis.default(config);
+				viz.render();
+			}
+		</script>
+
+
+		<script>
+			function getAnsFun(data) {
+				var get_tags_list = ["question", "A", "B", "C", "D", "ans", "tags", "label"]
+				var input_tags = ["问 题:", "选项 A：", "选项 B：", "选项 C：", "选项 D：", "答 案：", "该问题的标签", "该问题所属学科"]
+				html = "";
+				for (var i = 0; i < get_tags_list.length; i++) {
+					var key = get_tags_list[i];
+					var input_tag = input_tags[i];
+					html += '                        <div class="row" style="margin-bottom: 15px">\n' +
+						'                            <div class="col-lg-2 miracle-tag">' + input_tag + '</div>\n' +
+						'                            <div class="col-lg-10 miracle-ans">\n' +
+						'                               ' + data[key] + '\n' +
+						'                            </div>\n' +
+						'                        </div>'
+				}
+				return html;
+			}
+			// $(".get-ans").on("click", 'h2', function() {
+			// 	var question = $(this).text();
+			// 	console.log(question);
+			// 	$.ajax({
+			// 		url: window.serv + "/getAns",
+			// 		type: "POST",
+			// 		data: {
+			// 			"question": question 
+			// 		},
+			// 		success: function(data) {
+			// 			var get_tags_list = ["question", "A", "B", "C", "D", "ans", "tags", "label"]
+			// 			var input_tags = ["问 题:", "选项 A：", "选项 B：", "选项 C：", "选项 D：", "答 案：", "该问题的标签", "该问题所属学科"]
+			// 			html = "";
+			// 			for (let i = 0; i < get_tags_list.length; i++) {
+			// 				var key = get_tags_list[i];
+			// 				var input_tag = input_tags[i];
+			// 				html += '                        <div class="row" style="margin-bottom: 15px">\n' +
+			// 					'                            <div class="col-lg-2 miracle-tag">' + input_tag + '</div>\n' +
+			// 					'                            <div class="col-lg-10 miracle-ans">\n' +
+			// 					'                               ' + data[key] + '\n' +
+			// 					'                            </div>\n' +
+			// 					'                        </div>'
+			// 			}
+			// 			$(".modal-body").html(html)
+			// 		}
+			// 	})
+			// })
+		</script>
+	</body>
+</html>

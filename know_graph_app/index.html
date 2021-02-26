@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Document</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+	</head>
+	<body>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item mui-active" id="index">
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a class="mui-tab-item" id="search">
+				<span class="mui-icon mui-icon-search"></span>
+				<span class="mui-tab-label">搜索</span>
+			</a>
+			<a class="mui-tab-item" id="explain">
+				<span class="mui-icon mui-icon-navigate"></span>
+				<span class="mui-tab-label">名词解释</span>
+			</a>
+			<a class="mui-tab-item">
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">个人</span>
+			</a>
+		</nav>
+		<script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				var main = plus.webview.create("main.html", "main", {
+					top: "0px",
+					bottom: "50px"
+				})
+				main.show();
+			});
+		</script>
+		<script>
+			document.getElementById('search').addEventListener('tap', function() {
+				mui.openWindow({
+					url: 'search.html',
+					id: 'search',
+					styles: {
+						top: "0px",
+						bottom: "50px"
+					}
+				});
+			})
+
+			document.getElementById('index').addEventListener('tap', function() {
+				mui.openWindow({
+					url: 'main.html',
+					id: 'mian',
+					styles: {
+						top: "0px",
+						bottom: "50px"
+					}
+				});
+			})
+
+
+			document.getElementById('explain').addEventListener('tap', function() {
+				mui.openWindow({
+					url: 'explain.html',
+					id: 'explain',
+					styles: {
+						top: "0px",
+						bottom: "50px"
+					},
+				});
+			})
+		</script>
+	</body>
+</html>

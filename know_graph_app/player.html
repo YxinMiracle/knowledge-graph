@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Document</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" id="title"></h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-row" style="text-align: center;margin-top: 50px;">
+				<img id="music_cover" style="width: 240px;height: 220px;border-radius: 50%;">
+			</div>
+			<div class="mui-row" style="text-align: center;margin-top: 50px;">
+				<audio controls id="player" autoplay>
+					当前浏览器不支持audio
+				</audio>
+			</div>
+			<div class="mui-row" style="text-align: center;margin-top: 15px;">
+				<button type="button" class="mui-btn mui-btn-blue" id="play">播放</button>
+				<button type="button" class="mui-btn mui-btn-yellow" id="pause">暂停</button>
+				<button type="button" class="mui-btn mui-btn-green" id="resume">继续</button>
+				<!-- <button type="button" class="mui-btn mui-btn-red" id="stop">停止</button> -->
+			</div>
+			<div class="mui-row" style="text-align: center;margin-top: 25px;">
+				<button type="button" class="mui-btn mui-btn-purple mui-btn-block" id="send_music">将歌曲发送给伙伴</button>
+			</div>
+		</div>
+		<script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			var player = null
+			mui.plusReady(function() {
+				var player_wv = plus.webview.currentWebview();
+				// console.log(JSON.stringify(player_wv));
+				document.getElementById("title").innerText = player_wv.title + " - 正在播放";
+				//获取music_cover 显示
+				document.getElementById("music_cover").src = window.serv_image + player_wv.cover;
+				//获取music内容 播放
+				player = document.getElementById("player");
+				player.src = window.serv_music + player_wv.music;
+			});
+
+			document.getElementById('play').addEventListener('tap', function() {
+				player.play();
+			});
+			document.getElementById('pause').addEventListener('tap', function() {
+				player.pause();
+			})
+			document.getElementById('resume').addEventListener('tap', function() {
+				player.play();
+			})
+		</script>
+
+	</body>
+</html>

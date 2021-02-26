@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Document</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+		<style>
+			#viz {
+			            width: 100%;
+			            height: 500px;
+			            border: 1px solid lightgray;
+			            font: 22pt arial;
+			        }
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">问题搜索</h1>
+		</header>
+		<div class="mui-content">
+			<div style="text-align: center;margin-top: 35px;">
+				<img width="300px" src="./img/res_logo.png" alt="">
+			</div>
+			<div style="margin-top: 20px;border:1px solid #000000;">
+				<div class="mui-input-row mui-plus-visible">
+					<label>请输入问题 :</label>
+					<input type="text" class="mui-input-speech mui-input-clear" id="input_text" placeholder="语音输入">
+				</div>
+			</div>
+			<div>
+				<div class="mui-button-row" style="margin-top: 10px;">
+					<button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="input_text_btn">点击搜索</button>
+					<button type="button" class="mui-btn mui-btn-purple mui-btn-block" id="uploder_pic">拍照搜题</button>
+				</div>
+			</div>
+
+			<hr>
+			<div class="panel panel-default">
+				<header class="panel-heading">
+					知识图谱中已有的数据：
+				</header>
+				<div class="panel-body">
+					<div id="viz"></div>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+		</script>
+		<script src="js/neovis-without-dependencies.js"></script>
+		<script src="js/neovis.js"></script>
+		<script>
+			function draw() {
+				var viz;
+				var config = {
+					container_id: "\x76\x69\x7a",
+					server_url: window.neo4j_serv,
+					server_user: "\x6e\x65\x6f\x34\x6a",
+					server_password: "\x6e\x65\x77\x78\x69\x6e\x2e\x30\x30\x31\x32\x30\x36",
+					labels: {
+						"c语言": {
+							"\x63\x61\x70\x74\x69\x6f\x6e": "\x6e\x61\x6d\x65",
+							"\x74\x69\x74\x6c\x65\x5f\x70\x72\x6f\x70\x65\x72\x74\x69\x65\x73": ["\x6e\x61\x6d\x65", "\x5f\x69\x64",
+								"\x64\x65\x73\x63", '\x6c\x61\x62\x65\x6c'
+							]
+						},
+
+						"python": {
+							"\x63\x61\x70\x74\x69\x6f\x6e": "\x6e\x61\x6d\x65",
+							"\x74\x69\x74\x6c\x65\x5f\x70\x72\x6f\x70\x65\x72\x74\x69\x65\x73": ["\x6e\x61\x6d\x65", "\x5f\x69\x64",
+								"\x64\x65\x73\x63", '\x6c\x61\x62\x65\x6c'
+							]
+						},
+
+					},
+					relationships: {
+						"\u77e5\u8bc6\u70b9": {
+							"\x74\x68\x69\x63\x6b\x6e\x65\x73\x73": "\x77\x65\x69\x67\x68\x74",
+							"\x63\x61\x70\x74\x69\x6f\x6e": true,
+						},
+						"\u8be6\u7ec6": {
+							"\x74\x68\x69\x63\x6b\x6e\x65\x73\x73": "\x77\x65\x69\x67\x68\x74",
+							"\x63\x61\x70\x74\x69\x6f\x6e": true,
+						},
+					},
+
+					initial_cypher: "MATCH (n)-[r]->(m) RETURN m,n,r"
+
+				};
+				viz = new NeoVis.default(config);
+				viz.render();
+			}
+		</script>
+		<script>
+			window.onload = draw();
+		</script>
+		<script>
+			// 上床照片
+			function upload(scr) {
+				console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", scr)
+				var task = plus.uploader.createUpload(window.serv + "/uploader", {
+						method: "POST",
+						priority: 100
+					},
+					function(t, status) {
+						// 上传完成
+						if (status == 200) {
+							var data = JSON.parse(t.responseText);
+							console.log(JSON.stringify(data));
+							if (data.code == 0) { // 代表后端返回状态正常
+								mui.openWindow({
+									url: 'search_result.html',
+									id: 'search_result',
+									styles: {
+										top: "0px",
+										bottom: "50px"
+									},
+									extras: {
+										content: t.responseText
+									}
+								});
+							}
+							alert("图片上传成功");
+						} else {
+							alert("图片上传失败");
+						}
+					}
+				);
+				task.addFile(scr, {
+					key: "jpg"
+				});
+				task.start();
+			}
+		</script>
+		<script>
+			// 将图片进行压缩
+			function compressImage(scr) {
+				plus.zip.compressImage({
+						src: scr,
+						dst: scr,
+						overwrite: true,
+						quality: 10
+					},
+					function() {
+						console.log("图片压缩成功")
+						upload(scr);
+					},
+					function(error) {
+						alert("图片压缩失败");
+						console.log(error.message);
+					});
+			}
+		</script>
+
+		<script>
+			document.getElementById('uploder_pic').addEventListener('tap', function() {
+				// 打开手机摄像头
+				var camera = plus.camera.getCamera(1);
+				var fbl = "800*600";
+				var fmt = "jpg";
+				camera.captureImage(function(s) {
+					console.log("开始拍照");
+					console.log(s);
+					// 将图片压缩
+					compressImage(s);
+
+				}, function() {}, {
+					filename: "_doc/camera/",
+					resolution: fbl,
+					format: fmt
+				})
+			})
+		</script>
+
+		<script>
+			document.getElementById('input_text_btn').addEventListener('tap', function() {
+				var question = document.getElementById("input_text").value;
+				mui.post(window.serv + "/app_getAns", {
+					question: question
+				}, function(data) { 
+					console.log(JSON.stringify(data)); 
+					mui.openWindow({
+						url: 'search_result.html',
+						id: 'search_result',
+						styles: {
+							top: "0px",
+							bottom: "50px"
+						},
+						extras: {
+							content: data
+						}
+					});
+				}, 'json');
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Document</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">奇妙世界之音乐</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view" id="content_list">
+
+			</ul>
+		</div>
+		<script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			// 页面创建就要执行
+			mui.plusReady(function() {
+				mui.post(window.serv + '/get_content_list', {}, function(data) {
+					// console.log(JSON.stringify(data));
+					for (var i = 0; i < data.data.length; i++) {
+						create_content(data.data[i]);
+					}
+
+				}, 'json');
+			})
+
+			function create_content(content) {
+				//li标签创建
+				var li = document.createElement("li");
+				li.className = "mui-table-view-cell mui-media";
+				//创建a标签
+				var a = document.createElement("a");
+				a.addEventListener("tap", function() {
+					mui.openWindow({
+						url: "player.html",
+						id: "player.html",
+						extras: content
+					})
+				})
+
+				//创建img标签
+				var img = document.createElement("img");
+				img.className = "mui-media-object mui-pull-left";
+				img.src = window.serv_image + content.cover;
+				//创建div标签
+				var div = document.createElement("div");
+				div.className = "mui-media-body";
+				div.innerText = content.title;
+				//创建p标签
+				var p = document.createElement("p");
+				p.className = "mui-ellipsis";
+				p.innerText = content.title;
+
+				//创建Dom层级结构
+				li.appendChild(a);
+				a.appendChild(img);
+				a.appendChild(div);
+				div.appendChild(p);
+
+				//取出 content_list 这个 ul 的Dom对象
+				document.getElementById("content_list").appendChild(li);
+			}
+		</script>
+	</body>
+</html>
