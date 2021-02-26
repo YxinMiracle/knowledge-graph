@@ -15,8 +15,8 @@
     <link href="{% static "css/iconfont.css" %}" rel="stylesheet">
     <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
-    <script src="{% static "js/1.js" %}"></script>
-    <script src="{% static "js/2.js" %}"></script>
+    <script src="{% static "js/neovis-without-dependencies.js" %}"></script>
+    <script src="{% static "js/neovis.js" %}"></script>
     <script src="{% static "js/signform-0.0.1.js" %}"></script>
     <style>
         body {
@@ -69,7 +69,7 @@
 
         var config = {
             container_id: "\x76\x69\x7a",
-            server_url: "\x62\x6f\x6c\x74\x3a\x2f\x2f\x6c\x6f\x63\x61\x6c\x68\x6f\x73\x74\x3a\x37\x36\x38\x37",
+            server_url: "bolt://127.0.0.1:7687/",
             server_user: "\x6e\x65\x6f\x34\x6a",
             server_password: "\x6e\x65\x77\x78\x69\x6e\x2e\x30\x30\x31\x32\x30\x36",
             labels: {
@@ -118,7 +118,7 @@
     var toActiveLiTag = $("a[href='" + current_path + "']");
     toActiveLiTag.parent().addClass("active");
     toActiveLiTag.parent().siblings().removeClass("active");
-    console.log(toActiveLiTag)
+    {#console.log(toActiveLiTag)#}
 </script>
 
 {% block js %}

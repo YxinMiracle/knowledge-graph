@@ -1,192 +1,192 @@
-{% extends "home.html" %}
-
-{% block topJs %}
-
-
-{% endblock topJs %}
-
-{% block content %}
-<div class="container">
-    <div class="row">
-        <!--head start-->
-        <div class="col-md-12">
-            <h3 class="page-header"><i class="fa fa-link" aria-hidden="true"></i> 关系查询 </h3>
-            <ol class="breadcrumb">
-                <li><i class="fa fa-home"></i><a href="\">主页</a></li>
-                <li><i class="fa fa-link" aria-hidden="true"></i>关系查询</li>
-            </ol>
-        </div>
-
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <header class="panel-heading">
-                    查询条件：
-                </header>
-                <div class="panel-body">
-                    <form action="" id="searchRelationForm" class="form-inline" style="padding-left: 10% ; padding-right: 10%"
-                          method="post">
-                        {% csrf_token %}
-                        <div id="entity1" class="form-group" style="padding: 2%">
-                            <input type="text" id="entity1_text" name="entity1_text" class="form-control"
-                                   placeholder="实体１" aria-describedby="basic-addon1">
-                        </div>
-                        <div class="btn-group" style="padding: 2%">
-                            <a
-                                class="btn btn-default dropdown-toggle btn-select form-control" data-toggle="dropdown"
-                                id="btnCountry">关系类型<span class="caret"></span>
-                            </a>
-                        </div>
-                        <div id="relation_name" class="form-group hide" style="padding: 2%">
-                            <input type="text" id="relation_name_input" name="relation_name_text" class="form-control"
-                                   placeholder="输入关系名称" aria-describedby="basic-addon1">
-                        </div>
-                        <div id="entity2" class="form-group" style="padding: 2%">
-                            <input type="text" id="entity2_text" name="entity2_text" class="form-control"
-                                   placeholder="实体２" aria-describedby="basic-addon1">
-                        </div>
-                        <div class="btn-group" style="padding: 2%">
-                            <button type="submit" id="btnSearch" class="btn btn-primary">Search</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row">
-
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <header class="panel-heading">
-                    问题相关知识点的知识图谱展示：
-                </header>
-                <div class="panel-body">
-                    <div id="viz"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-{% endblock content%}
-
-{% block js %}
-<script type="text/javascript">
-        var viz;
-        function draw() {
-            var config = {
-                container_id: "viz",
-                server_url: "bolt://localhost:7687",
-                server_user: "neo4j",
-                server_password: "newxin.001206",
-                labels: {
-                    "Disease": {
-                        "caption": "name",
-                        // "size": "pagerank",
-                        // "community": "community",
-                        "title_properties": [
-                            "name",
-                        ]
-                    },
-                    "Check": {
-                        "caption": "name",
-                        // "size": "pagerank",
-                        // "community": "community",
-                        "title_properties": [
-                            "name",
-                        ]
-                    },
-                    "Department": {
-                        "caption": "name",
-                        // "size": "pagerank",
-                        // "community": "community",
-                        "title_properties": [
-                            "name",
-                        ]
-                    },
-                    "Drug": {
-                        "caption": "name",
-                        // "size": "pagerank",
-                        // "community": "community",
-                        "title_properties": [
-                            "name",
-                        ]
-                    },
-                    "Food": {
-                        "caption": "name",
-                        // "size": "pagerank",
-                        // "community": "community",
-                        "title_properties": [
-                            "name",
-                        ]
-                    },
-                    "Producer": {
-                        "caption": "name",
-                        // "size": "pagerank",
-                        // "community": "community",
-                        "title_properties": [
-                            "name",
-
-
-                        ]
-                    },
-                    "Symptom": {
-                        "caption": "name",
-                        // "size": "pagerank",
-                        // "community": "community",
-                        "title_properties": [
-                            "name",
-                        ]
-                    },
-
-                },
-                relationships: {
-                    "ACTED_IN": {
-                        "thickness": "weight",
-                        "caption": true,
-                    },
-                    "DIRECTED": {
-                        "thickness": "weight",
-                        "caption": true,
-                    },
-                    "FOLLOWS": {
-                        "thickness": "weight",
-                        "caption": true,
-                    },
-                    "PRODUCED": {
-                        "thickness": "weight",
-                        "caption": true,
-                    },
-                    "REVIEWED": {
-                        "thickness": "weight",
-                        "caption": true,
-                    },
-                    "WROTE": {
-                        "thickness": "weight",
-                        "caption": true,
-                    },
-
-                    // [NeoVis.NEOVIS_DEFAULT_CONFIG]: {
-                    //     "thickness": "defaultThicknessProperty",
-                    //     "caption": "defaultCaption"
-                    // }
-                },
-                initial_cypher: "{{ sql_str|safe }}"
-            };
-
-            viz = new NeoVis.default(config);
-            viz.render();
-        }
-
-    </script>
-
-
-<script>
-    window.onload=draw();
-
-</script>
-
-{% endblock js %}
+{#{% extends "home.html" %}#}
+{##}
+{#{% block topJs %}#}
+{##}
+{##}
+{#{% endblock topJs %}#}
+{##}
+{#{% block content %}#}
+{#<div class="container">#}
+{#    <div class="row">#}
+{#        <!--head start-->#}
+{#        <div class="col-md-12">#}
+{#            <h3 class="page-header"><i class="fa fa-link" aria-hidden="true"></i> 关系查询 </h3>#}
+{#            <ol class="breadcrumb">#}
+{#                <li><i class="fa fa-home"></i><a href="\">主页</a></li>#}
+{#                <li><i class="fa fa-link" aria-hidden="true"></i>关系查询</li>#}
+{#            </ol>#}
+{#        </div>#}
+{##}
+{#        <div class="col-md-12">#}
+{#            <div class="panel panel-default">#}
+{#                <header class="panel-heading">#}
+{#                    查询条件：#}
+{#                </header>#}
+{#                <div class="panel-body">#}
+{#                    <form action="" id="searchRelationForm" class="form-inline" style="padding-left: 10% ; padding-right: 10%"#}
+{#                          method="post">#}
+{#                        {% csrf_token %}#}
+{#                        <div id="entity1" class="form-group" style="padding: 2%">#}
+{#                            <input type="text" id="entity1_text" name="entity1_text" class="form-control"#}
+{#                                   placeholder="实体１" aria-describedby="basic-addon1">#}
+{#                        </div>#}
+{#                        <div class="btn-group" style="padding: 2%">#}
+{#                            <a#}
+{#                                class="btn btn-default dropdown-toggle btn-select form-control" data-toggle="dropdown"#}
+{#                                id="btnCountry">关系类型<span class="caret"></span>#}
+{#                            </a>#}
+{#                        </div>#}
+{#                        <div id="relation_name" class="form-group hide" style="padding: 2%">#}
+{#                            <input type="text" id="relation_name_input" name="relation_name_text" class="form-control"#}
+{#                                   placeholder="输入关系名称" aria-describedby="basic-addon1">#}
+{#                        </div>#}
+{#                        <div id="entity2" class="form-group" style="padding: 2%">#}
+{#                            <input type="text" id="entity2_text" name="entity2_text" class="form-control"#}
+{#                                   placeholder="实体２" aria-describedby="basic-addon1">#}
+{#                        </div>#}
+{#                        <div class="btn-group" style="padding: 2%">#}
+{#                            <button type="submit" id="btnSearch" class="btn btn-primary">Search</button>#}
+{#                        </div>#}
+{#                    </form>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#<div class="container">#}
+{#    <div class="row">#}
+{##}
+{#        <div class="col-md-12">#}
+{#            <div class="panel panel-default">#}
+{#                <header class="panel-heading">#}
+{#                    问题相关知识点的知识图谱展示：#}
+{#                </header>#}
+{#                <div class="panel-body">#}
+{#                    <div id="viz"></div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{##}
+{##}
+{#{% endblock content%}#}
+{##}
+{#{% block js %}#}
+{#<script type="text/javascript">#}
+{#        var viz;#}
+{#        function draw() {#}
+{#            var config = {#}
+{#                container_id: "viz",#}
+{#                server_url: "bolt://localhost:7687",#}
+{#                server_user: "neo4j",#}
+{#                server_password: "newxin.001206",#}
+{#                labels: {#}
+{#                    "Disease": {#}
+{#                        "caption": "name",#}
+{#                        // "size": "pagerank",#}
+{#                        // "community": "community",#}
+{#                        "title_properties": [#}
+{#                            "name",#}
+{#                        ]#}
+{#                    },#}
+{#                    "Check": {#}
+{#                        "caption": "name",#}
+{#                        // "size": "pagerank",#}
+{#                        // "community": "community",#}
+{#                        "title_properties": [#}
+{#                            "name",#}
+{#                        ]#}
+{#                    },#}
+{#                    "Department": {#}
+{#                        "caption": "name",#}
+{#                        // "size": "pagerank",#}
+{#                        // "community": "community",#}
+{#                        "title_properties": [#}
+{#                            "name",#}
+{#                        ]#}
+{#                    },#}
+{#                    "Drug": {#}
+{#                        "caption": "name",#}
+{#                        // "size": "pagerank",#}
+{#                        // "community": "community",#}
+{#                        "title_properties": [#}
+{#                            "name",#}
+{#                        ]#}
+{#                    },#}
+{#                    "Food": {#}
+{#                        "caption": "name",#}
+{#                        // "size": "pagerank",#}
+{#                        // "community": "community",#}
+{#                        "title_properties": [#}
+{#                            "name",#}
+{#                        ]#}
+{#                    },#}
+{#                    "Producer": {#}
+{#                        "caption": "name",#}
+{#                        // "size": "pagerank",#}
+{#                        // "community": "community",#}
+{#                        "title_properties": [#}
+{#                            "name",#}
+{##}
+{##}
+{#                        ]#}
+{#                    },#}
+{#                    "Symptom": {#}
+{#                        "caption": "name",#}
+{#                        // "size": "pagerank",#}
+{#                        // "community": "community",#}
+{#                        "title_properties": [#}
+{#                            "name",#}
+{#                        ]#}
+{#                    },#}
+{##}
+{#                },#}
+{#                relationships: {#}
+{#                    "ACTED_IN": {#}
+{#                        "thickness": "weight",#}
+{#                        "caption": true,#}
+{#                    },#}
+{#                    "DIRECTED": {#}
+{#                        "thickness": "weight",#}
+{#                        "caption": true,#}
+{#                    },#}
+{#                    "FOLLOWS": {#}
+{#                        "thickness": "weight",#}
+{#                        "caption": true,#}
+{#                    },#}
+{#                    "PRODUCED": {#}
+{#                        "thickness": "weight",#}
+{#                        "caption": true,#}
+{#                    },#}
+{#                    "REVIEWED": {#}
+{#                        "thickness": "weight",#}
+{#                        "caption": true,#}
+{#                    },#}
+{#                    "WROTE": {#}
+{#                        "thickness": "weight",#}
+{#                        "caption": true,#}
+{#                    },#}
+{##}
+{#                    // [NeoVis.NEOVIS_DEFAULT_CONFIG]: {#}
+{#                    //     "thickness": "defaultThicknessProperty",#}
+{#                    //     "caption": "defaultCaption"#}
+{#                    // }#}
+{#                },#}
+{#                initial_cypher: "{{ sql_str|safe }}"#}
+{#            };#}
+{##}
+{#            viz = new NeoVis.default(config);#}
+{#            viz.render();#}
+{#        }#}
+{##}
+{#    </script>#}
+{##}
+{##}
+{#<script>#}
+{#    window.onload=draw();#}
+{##}
+{#</script>#}
+{##}
+{#{% endblock js %}#}
