@@ -143,6 +143,26 @@ PUT question
 
 ![image-20210218081009302](https://gitee.com/yxinmiracle/pic/raw/master/20210218081009.png)
 
+### 目前APP开发成果
+
+#### （1）首页
+
+![image-20210226180855400](https://gitee.com/yxinmiracle/pic/raw/master/20210226180902.png)
+
+#### （2）搜索页
+
+![image-20210226180959627](https://gitee.com/yxinmiracle/pic/raw/master/20210226180959.png)
+
+#### （3）搜索结果页
+
+![image-20210226181137326](https://gitee.com/yxinmiracle/pic/raw/master/20210226181137.png)
+
+#### （4）名词解释页
+
+![image-20210226181237260](https://gitee.com/yxinmiracle/pic/raw/master/20210226181237.png)
+
+![image-20210226181249191](https://gitee.com/yxinmiracle/pic/raw/master/20210226181249.png)
+
 ### 问题
 
 - [x] 知识图谱在搜索结果展示的时候，前端的可视化并没有展示出哪个颜色是什么科目，我们需要在neo4j添加数据的时候进行加一个科目的属性（此问题已解决）
