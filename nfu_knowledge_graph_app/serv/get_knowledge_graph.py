@@ -42,6 +42,22 @@ def uploader():
         print(RET)
         return jsonify(RET)
 
+@get_knowledge_graph.route("/app_getAns",methods=["POST"])
+def app_getAns():
+    question_dict = request.form.to_dict()
+    question = question_dict.get("question")
+    if question:
+        result_list, tags_list = get_question_and_tags(question)
+        result_list = result_list["hits"]["hits"]
+        query = get_query(result_list)
+        print(result_list, query)
+
+        RET["code"] = 0
+        RET["msg"] = "获取答案成功"
+        RET["data"] = {"result_list":result_list,"query":query,"question":question}
+        print(RET)
+        return jsonify(RET)
+
 @get_knowledge_graph.route("/getAns", methods=["POST"])
 def getAns():
     question_dict = request.form.to_dict()
